@@ -1,0 +1,138 @@
+<section id="contato" class="gray-bg padding-top-bottom">
+    <div class="container">
+  
+      <!--Cabeçalho do Form -->
+      <header class="section-header text-left">
+        <h2>CONTATO</h2>
+      </header>
+  
+      <!--Form -->
+      <form [formGroup]="contactForm" novalidate id="contact-form">
+        <div class="row">
+  
+          <!--Contato -->
+          <div class="col-xs-12 col-sm-12 col-md-4 contact-info cta-message anima fade-right">
+            <address>
+              <strong>CortinaFacil.com.br</strong>
+              <br>São Sebastião do Caí/RS, Brasil<br>
+              (51) 99930-2468<br>
+              contato@cortinafacil.com.br
+            </address>
+          </div>
+  
+          <!--Campos -->
+          <div class="col-xs-12 col-sm-12 col-md-8 anima fade-up d1" >
+  
+            <!--Campo nome -->
+            <div class="form-group">
+              <label class="control-label" for="no_contato"></label>
+              <div class="controls">
+                <input id="no_contato"
+                       formControlName="no_contato"
+                       name="no_contato"
+                       placeholder="Seu nome"
+                       class="form-control input-lg requiredField"
+                       type="text">
+              </div>
+              <app-control-messages [control]="contactForm.controls.no_contato"></app-control-messages>
+            </div>
+  
+            <!--Campo email -->
+            <div class="form-group">
+              <label class="control-label" for="no_contatoEmail"></label>
+              <div class="controls">
+                <input id="no_contatoEmail"
+                       formControlName="no_contatoEmail"
+                       name="no_contatoEmail"
+                       placeholder="Seu e-mail"
+                       class="form-control input-lg requiredField"
+                       type="email">
+              </div>
+              <app-control-messages [control]="contactForm.controls.no_contatoEmail"></app-control-messages>
+            </div>
+  
+            <!--Campo assunto -->
+            <div class="form-group">
+              <label class="control-label" for="no_contatoAssunto"></label>
+              <div class="controls">
+                <input id="no_contatoAssunto"
+                        formControlName="no_contatoAssunto"
+                        name="no_contatoAssunto"
+                        placeholder="Assunto"
+                        class="form-control input-lg requiredField"
+                        type="text">
+              </div>
+              <app-control-messages [control]="contactForm.controls.no_contatoAssunto"></app-control-messages>
+            </div>
+  
+            <!--Campo mensagem -->
+            <div class="form-group">
+              <label class="control-label" for="tx_contatoMsg"></label>
+              <div class="controls">
+                <textarea id="tx_contatoMsg"
+                          formControlName="tx_contatoMsg"
+                          name="tx_contatoMsg"
+                          placeholder="Sua mensagem"
+                          class="form-control input-lg requiredField"
+                          rows="5"></textarea>
+              </div>
+              <app-control-messages [control]="contactForm.controls.tx_contatoMsg"></app-control-messages>
+            </div>
+  
+            <p>
+              <button name="submit"
+                      type="button"
+                      class="btn btn-store btn-block"
+                      data-toggle="modal"
+                      data-target="modalContato"
+                      [disabled]="!contactForm.valid"
+                      (click)="onFormSubmit()">Enviar Mensagem</button>
+            </p>
+  
+            <input type="hidden" 
+                   name="submitted1" 
+                   id="submitted1" 
+                   value="true">
+
+          </div>
+        </div>
+      </form>
+    </div>
+  </section>
+  
+  <div id="modalContato" class="modal fade text-modal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="color-bg">
+          <div class="container">
+            <div class="row ">
+              <div class="col-xs-12 col-sm-12 col-md-12 color-bg light-typo" id="9modal-bar">
+                <h2 class="pull-left">E-MAIL ENVIADO</h2>
+                <a class="close pull-right" href="#" data-dismiss="modal" ><i class="icon-close"></i></a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="container">
+          <div class="row ">
+            <div class="col-xs-12 col-sm-6 col-md-6">
+              <div>
+                <h3></h3>
+                <p>Agradecemos pelo envio. Entraremos em contato o mais breve possível.</p>
+              </div>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-6">
+              <div>
+                <br>
+                <img src="assets/img/icones/mail.gif" width="300" height="300" class="centro">
+                <br><br><br>
+              </div>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-12 text-center" >
+              <a class="btn btn-store" href="#" data-dismiss="modal" (click)="resetaForm()">Continue visitando nosso site</a><br><br>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

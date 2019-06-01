@@ -1,0 +1,35 @@
+<section id="newsletter" class="light-typo dark-bg padding-top-bottom">
+  <div class="container ">
+
+    <!--Cabeçalho -->
+    <header class="section-header text-center">
+      <h2>Assine nossa lista</h2>
+      <h4>Cadastre-se para receber e-mails sobre ofertas e notícias relacionadas ao Cortina Fácil</h4>
+    </header>
+
+    <!--Formulário -->
+    <div class="row">
+      <form [formGroup]=newsForm id="news-form" class="col-md-8 col-md-offset-2 col-sm-10 col-sm-offset-1 ">
+
+        <!--Campo email -->
+        <div class="input-group">
+          <input id="no_email" 
+                 name="no_email" 
+                 formControlName="no_email" 
+                 placeholder="Informe seu e-mail"
+                 class="form-control input-lg" 
+                 type="email" >
+          <span class="input-group-btn">
+            <button class="btn btn-store" 
+                    type="submit" 
+                    (click)="onSubmit()" 
+                    [disabled]="!newsForm.valid">Assinar</button>
+          </span>
+        </div>
+        <app-control-messages [control]="newsForm.controls.no_email"></app-control-messages>
+
+      </form>
+    </div>
+
+  </div>
+</section>

@@ -1,0 +1,103 @@
+<section id="searchOrder" class="light-typo dark-bg padding-top-bottom">
+  <div class="container ">
+
+    <!--Cabeçalho -->
+    <header class="section-header text-center">
+      <h3>Verifique a situação do seu pedido</h3>
+      <h4>Informe seu e-mail caso deseje buscar os seus últimos pedidos realizados conosco.</h4>
+    </header>
+
+    <!--Form -->
+    <div class="row">
+      <form id="searchOrder-form" [formGroup]="searchForm" class="col-md-8 col-md-offset-2 col-sm-10 col-sm-offset-1" novalidate (ngSubmit)="onFormSubmit()">
+
+        <!--Campo email -->
+        <div class="input-group">
+          <label for="no_emailBusca" class="control-label"></label>
+          <input id="no_emailBusca" name="no_emailBusca" placeholder="Informe seu e-mail" class="form-control input-lg" type="email" formControlName="no_emailBusca">
+          <span class="input-group-btn">
+            <button name="submitSearch" type="submit" class="btn btn-store" data-toggle="modal" data-target="#modalSearch" [disabled]="!searchForm.valid">Consultar!</button>
+          </span>
+        </div>
+        
+        <app-control-messages [control]="searchForm.controls.no_emailBusca"></app-control-messages>
+        <input type="hidden" name="submitted3" id="submitted3" value="true">
+
+      </form>
+    </div>
+
+  </div>
+</section>
+
+<div id="modalSearch" class="modal fade text-modal" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="color-bg">
+        <div class="container">
+          <div class="row ">
+            <div class="col-xs-12 col-sm-12 col-md-12 color-bg light-typo" id="9modal-bar">
+              <h2 class="pull-left">RESULTADOS DA PESQUISA</h2>
+              <a class="close pull-right" href="#" data-dismiss="modal" ><i class="icon-close"></i></a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="container">
+        <div class="row ">
+          <div class="col-xs-12 col-sm-6 col-md-6">
+            <div>
+              <h3></h3>
+              <p>Resultados pelo e-mail: {{getFilter()}}.</p>
+            </div>
+          </div>
+            <h2>Meus últimos pedidos</h2>
+
+            <div class="container">
+              <div class="row">
+                <div class="col-xs-12">
+                  <div class="table-responsive">
+                    <table summary="This table shows how to create responsive tables using Bootstrap's default functionality" class="table table-bordered table-hover">
+                      <caption class="text-center">Acompanhe abaixo seus últimos pedidos no <a href="https://getbootstrap.com/css/#tables-responsive" target="_blank">CortinaFácil</a> (para mais informações, por favor, entre em contato conosco):</caption>
+                      <thead>
+                        <tr>
+                          <th>Pedido</th>
+                          <th>Data</th>
+                          <th>Descrição</th>
+                          <th>Qtde Itens</th>
+                          <th>Valor Total</th>
+                          <th>Situação</th>
+                        </tr>
+                      </thead>
+                      <tbody *ngIf="getResultados()">
+                        <tr *ngFor="let pedido of pedidosLista">
+                          <td>{{pedido?.$key}}</td>
+                          <td>{{pedido?.dt_pedido.toDate() | date: 'dd/MM/yyyy'}}</td>
+                          <td><span *ngFor="let item of pedido.itens">{{item['noCortina']}} ({{item['qt']}}) </span></td>
+                          <td>{{pedido?.qt_itens}}</td>
+                          <td>{{pedido?.vr_totalMaisFrete | currency:"R$ ":0}}</td>
+                          <td>{{pedido?.ic_situacao}}</td>
+                        </tr>
+                      </tbody>
+                      <tfoot *ngIf="getResultados()">
+                        <tr>
+                          <td colspan="6" class="text-center">Dados recuperados conforme nossa política de privacidade.</td>
+                        </tr>
+                      </tfoot>
+                      <tfoot *ngIf="!getResultados()">
+                        <tr>
+                          <td colspan="6" class="text-center">Desculpe, não encontramos resultados para a sua busca.</td>
+                        </tr>
+                      </tfoot>
+                    </table>
+                  </div><!--end of .table-responsive-->
+                </div>
+              </div>
+            </div>
+          <div class="col-xs-12 col-sm-12 col-md-12 text-center" >
+            <a class="btn btn-store" href="#" data-dismiss="modal">Retornar ao site</a><br><br>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

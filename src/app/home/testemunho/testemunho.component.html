@@ -1,0 +1,21 @@
+<section id="testemunhos" class="padding-top-bottom image-bg light-typo">
+  <div class="container">
+    <div class="testimonial">
+      <div id="carousel-example-generic" class="carousel slide bs-docs-carousel-example" data-interval="10000">
+        <ol class="carousel-indicators">
+          <li *ngFor="let frase of testemunhosLista; let first=first; let i=index" data-target="#carousel-example-generic" [attr.data-slide-to]="i" class="{{frase.ic_default ? 'active' : ''}}"></li>
+        </ol>
+        <div class="carousel-inner">
+          <div *ngFor="let frase of testemunhosLista; let i = index" class="{{frase?.ic_default ? 'item active' : 'item'}}">
+            <h1>{{frase?.ds_frase1}}<br>{{frase?.ds_frase2}}</h1>
+            <br>
+            <h3>{{frase?.no_autor}}</h3>
+          </div>
+        </div>
+        <br><br><br>
+      </div>
+    </div>
+    <div class="overlay-bg-inferior">
+    </div>
+  </div>
+</section>

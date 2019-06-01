@@ -1,0 +1,420 @@
+<section id="pedido" class="gray-bg padding-top-bottom">
+  <div class="container">
+
+    <!--Header da sessão -->
+    <header class="section-header text-center">
+      <h2>FAÇA SEU PEDIDO</h2>
+    </header>
+
+    <!--Formulário -->
+    <form [formGroup]="orderForm" novalidate id="order-form" autocomplete="off" >
+      <div>
+
+        <!-- Lista de itens -->
+        <div class="row">
+          <div class="col-sm-12 col-md-12 col-lg-12">
+            <p class="text-left"><strong>ITENS DO CARRINHO</strong></p>
+            <table class="table calculator">
+
+              <!-- Cabeçalho da tabela -->
+              <thead>
+                <tr>
+                  <th><tr><td></td></tr></th>
+                  <th>
+                    <tr>
+                      <td>CORTINA&nbsp;</td>
+                      <td class="right-title-header">
+                        <a data-balloon="1. Escolha o modelo de cortina e a quantidade desejada." data-balloon-pos="right">
+                          <img src="https://firebasestorage.googleapis.com/v0/b/cortinafacil-ba0d7.appspot.com/o/icones%2Finfo.png?alt=media&token=2db90947-b9d9-47b6-bfe9-2f5d48ac68f3" width="20" height="28" alt="Dica" class="centro">
+                        </a>
+                      </td>
+                    </tr>
+                  </th>
+                  <th>
+                    <tr>
+                      <td>DIMENSÕES&nbsp;</td>
+                      <td class="right-title-header">
+                        <a data-balloon="2. Informe as medidas (em centímetros) da área que deseja cobrir." data-balloon-pos="right">
+                          <img src="https://firebasestorage.googleapis.com/v0/b/cortinafacil-ba0d7.appspot.com/o/icones%2Finfo.png?alt=media&token=2db90947-b9d9-47b6-bfe9-2f5d48ac68f3" width="20" height="28" alt="Dica" class="centro">
+                        </a>
+                      </td>
+                    </tr>
+                  </th>
+                  <th>
+                    <tr>
+                      <td class="col-sm-3 col-md-3 col-lg-3">
+                        <a data-balloon="3. Confira o valor cobrado por item e também o valor total da compra." data-balloon-pos="left">
+                          <img src="https://firebasestorage.googleapis.com/v0/b/cortinafacil-ba0d7.appspot.com/o/icones%2Fcalculadora.png?alt=media&token=f23885f4-f344-4218-b0ce-1649f3421e05" width="20" height="28" alt="Dica" class="centro">
+                        </a>
+                      </td>
+                      <td class="col-sm-9 col-md-9 col-lg-9">TOTAL</td>
+                    </tr>
+                  </th>
+                  <th><tr><td></td></tr></th>
+                </tr>
+              </thead>
+
+              <!-- Linhas da tabela -->
+              <tbody formArrayName="itens">
+
+                <!-- Linha 1 -->
+                <tr *ngFor="let ord of itemFormArray.controls; let i = index;" [formGroupName]="i">
+                  
+                  <!-- Col 1: ID (0/12 até 1/12) -->
+                  <td class="col-sm-1 col-md-1 col-lg-1 text-center fonte-verde">
+                    <div class="row space">
+                      <div class="col-sm-12 col-md-12">
+                        <strong>{{i+1}}</strong>
+                        <br><br>
+                      </div>
+                    </div>
+                  </td>
+                  
+                  <!-- Col 2: Cortina (2/12 até 6/12) -->
+                  <td  class="col-sm-6 col-md-6 col-lg-6 text-left">
+                    <div class="row space">
+                      <div class="col-sm-6 col-md-3 space-label">Modelo:</div>
+                      <div class="col-sm-6 col-md-9 text-left">
+                        <select id="idProduto" 
+                                formControlName="idProduto" 
+                                class="form-control form-control-inline" 
+                                name="{{'nu_tpPrincipal' + i}}" 
+                                data-balloon-length="15" 
+                                (keyup)="atualizaFormItem(i)"
+                                (click)="atualizaFormItem(i)">
+                          <option value="NENHUM" selected>Selecione aqui sua cortina</option>
+                          <option *ngFor="let produto of produtosLista; let i = index" [value]="produto?.$key">{{produto?.nome}}</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="row space">
+                      <div class="col-sm-6 col-md-3 space-label">Quantidade:</div>
+                      <div class="col-sm-6 col-md-6 col-lg-8 text-left">
+                        <select id="qt" 
+                                formControlName="qt" 
+                                class="form-control form-control-inline" 
+                                name="{{'qt' + i}}" 
+                                (keyup)="atualizaFormItem(i)"
+                                (click)="atualizaFormItem(i)">
+                          <option value="0" selected>Selecione</option>
+                          <option value="1">1</option>
+                          <option value="2">2</option>
+                          <option value="3">3</option>
+                          <option value="4">4</option>
+                          <option value="5">5</option>
+                          <option value="6">6</option>
+                          <option value="7">7</option>
+                          <option value="8">8</option>
+                          <option value="9">9</option>
+                          <option value="10">10</option>
+                        </select>
+                      </div>
+                    </div>
+                  </td>
+                  
+                  <!-- Col 3: Dimensões (7/12 até 9/12) -->
+                  <td class="col-sm-3 col-md-3 col-lg-3 text-left">
+                    <div class="row space">
+                      <div class="col-sm-6 col-md-5 col-lg-5 space-label">Altura(cm):</div>
+                      <div class="col-sm-6 col-md-7 col-lg-7 text-left">
+                        <input id="height" 
+                               formControlName="height" 
+                               name="{{'nu_altura' + i}}" 
+                               class="form-control form-control-inline" 
+                               type="text" 
+                               min="30" 
+                               max="300"
+                               onfocusout="if(this.value>300) return this.value = 300;if(this.value<30) return this.value = 30;" 
+                               size="5" 
+                               pattern="([0-9]{5})" 
+                               (change)="atualizaFormItem(i)"
+                               title="Digite algo entre 30 e 300cm!">
+                      </div>
+                    </div>
+                    <div class="row space">
+                      <div class="col-sm-6 col-md-5 col-lg-5 space-label">Largura(cm):</div>
+                      <div class="col-sm-6 col-md-7 col-lg-7 text-left">
+                        <input id="width" 
+                               formControlName="width" 
+                               name="{{'nu_largura' + i}}" 
+                               class="form-control form-control-inline" 
+                               type="text" 
+                               min="50" 
+                               max="1000" 
+                               onfocusout="if(this.value>1000) return this.value = 1000;if(this.value<50) return this.value = 50;"
+                               size="5" 
+                               pattern="([0-9]{5})" 
+                               (change)="atualizaFormItem(i)"
+                               title="Digite algo entre 50 e 1000cm!">
+                      </div>
+                    </div>
+                  </td>
+                  
+                  <!-- Col 4: Preço (10/12 até 11/12) -->
+                  <td class="col-sm-2 col-md-1 col-lg-1 text-left">
+                    <div class="row space">
+                      <div class="col-sm-0 col-md-3 col-lg-3"></div>
+                      <div class="col-sm-12 col-md-9 col-lg-9 mini-texto text-center">
+                        <!--<div><br>
+                          <span *ngIf="orderForm.controls.itens.controls[i].controls.tpPrincipal.value!=='0' && orderForm.controls.itens.controls[i].controls.tpPrincipal.value!==0">R$ 40.00/m²<br></span>
+                        </div>-->
+                        <br>
+                      </div>
+                    </div>
+                    <div class="row space">
+                      <div class="col-sm-0 col-md-3 col-lg-3"></div>
+                      <div class="col-sm-12 col-md-9 col-lg-9 total bottom text-center">{{ getTotalItem(i) | currency:"R$&nbsp;":0 }}</div>
+                    </div>
+                  </td>
+                  
+                  <!-- Col 6: Ação (11/12 até 12/12) -->
+                  <td class="col-sm-12 col-md-1 col-lg-1 text-right">
+                    <div>
+                      <br><a href="#pedido" (click)="excluirItemFormulario(i)"><img src="https://firebasestorage.googleapis.com/v0/b/cortinafacil-ba0d7.appspot.com/o/icones%2Fexcluir.png?alt=media&token=780cd957-b47c-4d57-96b6-ca855f8db0ef" width="15" height="15" alt="Excluir"></a>
+                    </div>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td></td>
+                  <td class="text-left">
+                    <div>
+                      <div class="col-sm-1 col-md-1 col-lg-1"><img src="https://firebasestorage.googleapis.com/v0/b/cortinafacil-ba0d7.appspot.com/o/icones%2Fexclamacao.png?alt=media&token=871390bf-38c9-4a70-8dc2-aa946fcaf4d8" width="18" height="18" alt="Dica" class="centro">&nbsp;</div>
+                      <div class="col-sm-11 col-md-11 col-lg-11">- Não acompanha varão/trilho de fixação, nem montagem. <br>* <a href="#" data-toggle="modal" data-target="#modalDicasMedidas">Clique aqui</a> e saiba mais sobre como inserir as medidas.</div>
+                    </div>
+                  </td>
+                  <td></td>
+                  <td></td>
+                  <td class="col-sm-1 col-md-1 col-lg-1 text-right">
+                    <a href="#pedido" (click)="incluirItemFormulario()"><img src="https://firebasestorage.googleapis.com/v0/b/cortinafacil-ba0d7.appspot.com/o/icones%2Fmais.png?alt=media&token=06bf4174-79d6-4a1f-a464-d4bf0d184f7c" width="20" height="20" alt="Adicionar"></a>
+                  </td>
+                </tr>
+
+              </tbody>
+            </table>
+
+          </div>
+
+          <!-- DADOS PESSOAIS -->
+          <div class="col-sm-6 col-md-6 contact-info">
+
+            <!-- Cabeçalho dos métodos de pagamento -->
+            <p class="text-left"><strong>DADOS PESSOAIS</strong></p>
+
+            <!-- Formulário de faturamento -->
+            <div class="form-group">
+              <label for="no_cliente" class="control-label"></label>
+              <input formControlName="no_cliente" id="no_cliente" name="no_cliente" placeholder="Nome" class="form-control input-lg" type="text">
+              <app-control-messages [control]="orderForm.controls.no_cliente"></app-control-messages>
+            </div>
+            <div class="row">
+              <div class="col-sm-4 col-md-4">
+                <div class="form-group">
+                  <label for="nu_telefone" class="control-label"></label>
+                  <input formControlName="nu_telefone" id="nu_telefone" name="nu_telefone" placeholder="DDD+Telefone" class="form-control input-lg" type="text">
+                  <app-control-messages [control]="orderForm.controls.nu_telefone"></app-control-messages>
+                </div>
+              </div>
+              <div class="col-sm-8 col-md-8">
+                <div class="form-group">
+                  <label for="no_email" class="control-label"></label>
+                  <input formControlName="no_email" id="no_email" name="no_email" placeholder="E-mail" class="form-control input-lg" type="email">
+                  <app-control-messages [control]="orderForm.controls.no_email"></app-control-messages>
+                </div>
+              </div>
+            </div>
+
+            <p><img src="https://stc.pagseguro.uol.com.br/public/img/banners/pagamento/todos_estatico_550_100.gif" width="100%" alt="Logotipos de meios de pagamento do PagSeguro" title="Este site aceita pagamentos com as principais bandeiras e bancos, saldo em conta PagSeguro e boleto."></p><br>
+
+            <p class="caixa"><strong>ATENÇÃO:</strong><br><br>1. Você está comprando a cortina confeccionada com seus fixadores (argolas, deslizantes ou ilhoses); <br>2. O produto não acompanha o varão ou trilho de sustentação, nem inclui a mão de obra para instalação.</p>
+
+          </div>
+
+          <!-- ENDEREÇO DE ENTREGA -->
+          <div class="col-sm-6 col-md-6">
+
+            <!-- Cabeçalho do endereço -->
+            <p class="text-left"><strong>SOBRE A ENTREGA</strong></p>
+
+            <!-- Formulário de endereço -->
+            <div class="form-group">
+              <label for="no_logradouro" class="control-label"></label>
+              <input formControlName="no_logradouro" 
+                     id="no_logradouro" 
+                     name="no_logradouro" 
+                     placeholder="Rua, avenida, estrada..." 
+                     class="form-control" 
+                     type="text">
+              <app-control-messages [control]="orderForm.controls.no_logradouro"></app-control-messages>
+            </div>
+            <div class="row">
+              <div class="col-sm-6 col-md-6 form-group">
+                <label for="nu_numero" class="control-label"></label>
+                <input formControlName="nu_numero" 
+                       id="nu_numero" 
+                       name="nu_numero" 
+                       placeholder="Número" 
+                       class="form-control" 
+                       type="text">
+                <app-control-messages [control]="orderForm.controls.nu_numero"></app-control-messages>
+              </div>
+              <div class="col-sm-6 col-md-6 form-group">
+                <label for="no_bairro" class="control-label"></label>
+                <input formControlName="no_bairro" 
+                       id="no_bairro" 
+                       name="no_bairro" 
+                       placeholder="Bairro" 
+                       class="form-control" 
+                       type="text">
+                <app-control-messages [control]="orderForm.controls.no_bairro"></app-control-messages>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="no_municipio" class="control-label"></label>
+              <input formControlName="no_municipio" 
+                     id="no_municipio" 
+                     name="no_municipio" 
+                     placeholder="Município" 
+                     class="form-control" 
+                     type="text">
+              <app-control-messages [control]="orderForm.controls.no_municipio"></app-control-messages>
+            </div>
+
+            <div class="row">
+              <div class="col-sm-6 col-md-6 form-group">
+                  <label for="sg_uf" class="control-label"></label>
+                  <select id="sg_uf" 
+                          formControlName="sg_uf" 
+                          class="form-control input-lg"
+                          name="sg_uf"
+                          (keyup)="atualizaForm()" (click)="atualizaForm()"
+                          autocomplete="new-password">
+                    <option value="NENHUM" selected>Selecione aqui</option>
+                    <option *ngFor="let frete of fretesLista; let i = index" 
+                            [value]="frete?.$key">{{frete.sgUf}} - {{frete.nameUf}}</option>
+                  </select>
+                  <app-control-messages [control]="orderForm.controls.sg_uf"></app-control-messages>
+              </div>
+              <div class="col-sm-6 col-md-6 form-group">
+                  <label for="nu_cep" 
+                         class="control-label"></label>
+                  <input formControlName="nu_cep" 
+                         id="nu_cep" 
+                         name="nu_cep" 
+                         placeholder="CEP" 
+                         class="form-control" 
+                         type="text">
+                  <app-control-messages [control]="orderForm.controls.nu_cep"></app-control-messages>
+              </div>
+            </div>
+
+            <!-- Resumo do pedido -->
+            <table class="table">
+
+              <!-- Cabeçalho do resumo -->
+              <p class="text-left"><strong>RESUMO DO PEDIDO</strong></p>
+              <tbody>
+                <tr>
+                  <td>Quantidade</td>
+                  <td></td>
+                  <td class="text-right">{{ getQtItens() }}</td>
+                </tr>
+                <tr>
+                  <td>Valor das cortinas</td>
+                  <td></td>
+                  <td class="text-right">{{ getVrTotalItens() | currency:"R$ ":0 }}</td>
+                </tr>
+                <tr>
+                  <td>Valor do frete:</td>
+                  <td></td>
+                  <td class="text-right">{{ getVrFrete() | currency:"R$ ":0 }}</td>
+                </tr>
+                <tr>
+                  <td><strong>Valor total (com frete):</strong></td>
+                  <td></td>
+                  <td id="total" class="text-right"><strong>{{ getVrTotalMaisFrete() | currency:"R$ ":0 }}</strong></td>
+                </tr>
+              </tbody>
+
+            </table>
+
+            <p>
+
+              <button name="submit"
+                      type="button"
+                      class="btn btn-store btn-block"
+                      (click)="onFormSubmit()">
+                      Efetuar Pedido (PagSeguro)
+              </button>
+              <!-- data-toggle="modal"  data-target="#modalOrder"-->
+            </p>
+            <!--<input type="hidden" name="submitted" id="submitted" value="true">-->
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</section>
+
+<div id="modalOrder" class="modal fade text-modal" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="color-bg">
+        <div class="container">
+          <div class="row ">
+            <div class="col-xs-12 col-sm-12 col-md-12 color-bg light-typo" id="9modal-bar">
+              <h2 class="pull-left">EFETUAR PAGAMENTO</h2>
+              <a class="close pull-right" href="#" data-dismiss="modal" ><i class="icon-close"></i></a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="container">
+        <div class="row ">
+          <div class="col-xs-12 col-sm-6 col-md-6">
+            <div>
+              <h3></h3>
+              <p>Seu pedido foi realizado. Contudo, ele será confirmado apenas após a realização do pagamento.</p>
+            </div>
+          </div>
+          <div class="col-xs-12 col-sm-6 col-md-6">
+            <div>
+              <br><br>
+              <img src="https://firebasestorage.googleapis.com/v0/b/cortinafacil-ba0d7.appspot.com/o/icones%2Femail-sent.png?alt=media&token=da32a710-f28e-4b83-b0a2-4c4d5d189294" width="300" height="300" class="centro">
+            </div>
+          </div>
+          <div class="col-xs-12 col-sm-12 col-md-12 text-center" >
+            <a class="btn btn-store" href="{{urlPagamento}}" data-dismiss="modal">Voltar ao pedido</a><br><br>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div id="modalDicasMedidas" class="modal fade text-modal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="color-bg">
+          <div class="container">
+            <div class="row ">
+              <div class="col-xs-12 col-sm-12 col-md-12 color-bg light-typo" id="9modal-bar">
+                <h2 class="pull-left">MEDINDO SUA CORTINA</h2>
+                <a class="close pull-right" href="#" data-dismiss="modal" ><i class="icon-close"></i></a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="container">
+          <div class="row text-center">
+            <img src="https://firebasestorage.googleapis.com/v0/b/cortinafacil-ba0d7.appspot.com/o/instrucoes%2Finstrucoes.png?alt=media&token=f987f071-1154-421b-9f32-53587859bebb">
+            <div class="col-xs-12 col-sm-12 col-md-12 text-center" >
+              <a class="btn btn-store" href="#" data-dismiss="modal">Voltar para o pedido</a><br><br>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+</div>
+  

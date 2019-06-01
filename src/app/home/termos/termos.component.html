@@ -1,0 +1,35 @@
+<div id="modalTermos" class="modal fade text-modal" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="color-bg">
+        <div class="container">
+          <div class="row ">
+            <div class="col-xs-12 col-sm-12 col-md-12 color-bg light-typo" id="9modal-bar">
+              <h2 class="pull-left">TERMOS & CONDIÇÕES</h2>
+              <a class="close pull-right" href="#" data-dismiss="modal" ><i class="icon-close"></i></a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="container">
+        <div class="row ">
+          <div class="col-xs-12 col-sm-6 col-md-6">
+            <div *ngFor="let esquerda of termosEsqLista">
+              <h3>{{esquerda?.no_cabecalho}}</h3>
+              <p>{{esquerda?.ds_texto}}</p>
+            </div>
+          </div>
+          <div class="col-xs-12 col-sm-6 col-md-6">
+            <div *ngFor="let direita of termosDirLista">
+              <h3>{{direita?.no_cabecalho}}</h3>
+              <p>{{direita?.ds_texto}}</p>
+            </div>
+          </div>
+          <div class="col-xs-12 col-sm-12 col-md-12 text-center" >
+            <a class="btn btn-store" href="#" data-dismiss="modal">Voltar para a loja</a><br><br>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
